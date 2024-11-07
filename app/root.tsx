@@ -24,7 +24,7 @@ export const links: LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -32,9 +32,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <header className="text-center bg-slate-300">ヘッダー</header>
+        <div className="h-screen">
+          {children}
+        </div>
         <ScrollRestoration />
         <Scripts />
+        <footer className="text-center bg-slate-300 bottom-0">フッター</footer>
       </body>
     </html>
   );
