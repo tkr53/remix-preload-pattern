@@ -1,4 +1,4 @@
-import { defer, type MetaFunction } from "@remix-run/node";
+import { defer, LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
 import { Await, Link, useLoaderData } from "@remix-run/react";
 import { Suspense } from "react";
  
@@ -9,7 +9,9 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = () => {
+export const loader = ({request}: LoaderFunctionArgs) => {
+  const ua = request.headers.get("User-Agent");
+  console.log(ua)
   const slowPromise: Promise<{data: string}> = new Promise((resolve) => {
     setTimeout(() => {
       resolve({data: "Promise Done!!"});
