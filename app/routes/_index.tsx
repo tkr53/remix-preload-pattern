@@ -11,7 +11,6 @@ export const meta: MetaFunction = () => {
 
 export const loader = ({request}: LoaderFunctionArgs) => {
   const ua = request.headers.get("User-Agent");
-  console.log(ua)
   const slowPromise: Promise<{data: string}> = new Promise((resolve) => {
     setTimeout(() => {
       resolve({data: "Promise Done!!"});
@@ -19,16 +18,19 @@ export const loader = ({request}: LoaderFunctionArgs) => {
   });
 
   return defer({
+    ua,
     slowPromise
   })
 }
 
 export default function Index() {
-  const { slowPromise } = useLoaderData<typeof loader>()
+  const { ua, slowPromise } = useLoaderData<typeof loader>()
   return (
     <>
       <div className="text-center text-3xl my-4">メインコンテンツ</div>
       <div className="text-center py-10">
+      <div>あなたの端末情報: {ua}
+      </div>
         <Suspense fallback={<div>Loading...</div>}>
           <Await resolve={slowPromise}>
             {(data) => <div>{data.data}</div>}
